@@ -18,9 +18,11 @@ monochrome. TabMath and TagYourTurn are built on it.
 - **Agent rules** in `AGENTS.md` (Claude Code reads it via `CLAUDE.md`)
 - **Vitest** with tests for every shared helper
 
-Optional modules (auth with guest sessions, photo uploads, AI extraction) are
-documented in [`docs/modules/`](./docs/modules) with the reference
-implementation in TabMath.
+Optional modules are documented in [`docs/modules/`](./docs/modules), with
+TabMath as the reference implementation:
+[accounts + guest sessions](./docs/modules/auth-clerk.md),
+[photo uploads](./docs/modules/uploads-uploadthing.md),
+[AI extraction](./docs/modules/ai-extraction.md).
 
 ## Run it
 
@@ -53,13 +55,18 @@ Monochrome, two voices, 1px borders, zero radius, numbered section labels.
 | `display` utility | Space Grotesk headlines and big numbers |
 | `label` utility | 11px uppercase mono labels |
 
-Primitives: `Button` (+ `buttonVariants` for links), `Input`, `Textarea`,
-`Field`, `Switch`, `Dialog` (native `<dialog>`), `ToastProvider`/`useToast`,
-`CopyField`, `SectionLabel`, `Shell`, `Divider`.
+Primitives: `Button` (+ `buttonVariants` for links), `Input` (`mono` or
+`display`), `Textarea`, `Field`, `Switch`, `Dialog` (native `<dialog>`),
+`Toaster` + `toast()` from `src/lib/toast.ts`, `CopyField`, `SectionLabel`,
+`Shell` (`narrow` or `wide`), `Divider`.
 
 ## Keeping tools in sync
 
-Tools copy the template; they don't depend on it. When a shared file improves
-here (anything outside "This tool" in `AGENTS.md`, `src/lib/server/*`,
-`src/lib/csp*.ts`, `src/components/ui/*`, `next.config.ts`, `src/proxy.ts`),
-port it to each tool in a PR.
+Tools copy the template; they don't depend on it. Shared files are
+everything above "This tool" in `AGENTS.md`, `CLAUDE.md`, the configs
+(`tsconfig`, ESLint, PostCSS, Vitest, `prisma.config.ts`, `scripts/db-check.mjs`),
+`src/app/globals.css`, `src/components/ui/*`, `src/components/site/site-*.tsx`,
+`src/lib/{api-client,clipboard,csp,csp-report,rate-limit-window,toast,utils}.ts`,
+`src/lib/server/{db,http,token,client-ip,rate-limit}.ts` and the CSP report route.
+When one improves here, copy it into each tool and open a PR. Tool-specific
+values live in `src/config/`, so shared files copy over cleanly.

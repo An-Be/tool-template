@@ -6,14 +6,13 @@ import { Button } from "@/components/ui/button";
 import { CopyField } from "@/components/ui/copy-field";
 import { Dialog } from "@/components/ui/dialog";
 import { SectionLabel } from "@/components/ui/section-label";
-import { useToast } from "@/components/ui/toast-provider";
 import { api } from "@/lib/api-client";
+import { toast } from "@/lib/toast";
 
 const subscribeNoop = () => () => {};
 
 export function SpaceView({ token, title }: { token: string; title: string }) {
   const router = useRouter();
-  const { toast } = useToast();
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [rotating, setRotating] = useState(false);
   // The origin is only known in the browser; render a path on the server.
@@ -26,7 +25,7 @@ export function SpaceView({ token, title }: { token: string; title: string }) {
     setRotating(false);
     setConfirmOpen(false);
     if (!res.ok) {
-      toast(res.error);
+      toast.error(res.error);
       return;
     }
     toast("New link ready. The old one no longer works.");

@@ -51,6 +51,8 @@ export type ParsedBody<T> = { ok: true; data: T } | { ok: false; response: NextR
 
 /**
  * Reads a size-capped JSON body and validates it with a Zod schema.
+ * On failure it returns 400 with the first issue's message, so give every
+ * field a user-facing message in the schema (`{ error: "..." }`).
  * Zod object schemas strip unknown keys, which is what blocks mass assignment;
  * never switch a schema to .passthrough() or .loose().
  */
@@ -68,6 +70,8 @@ export async function parseJsonBody<S extends z.ZodType>(
     return { ok: false, response: badRequest("Invalid JSON.") };
   }
   const parsed = schema.safeParse(value);
-  if (!parsed.success) return { ok: false, response: badRequest("Invalid request.") };
+  if (!parsed.success) {
+    return { ok: false, response: badRequest(parsed.error.issues[0]?.message ?? "Invalid request.") };
+  }
   return { ok: true, data: parsed.data };
 }

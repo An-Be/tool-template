@@ -8,6 +8,8 @@ const eslintConfig = defineConfig([
   {
     rules: {
       "@typescript-eslint/no-explicit-any": "error",
+      // `const { secret, ...rest } = row` is how we drop fields before sending them.
+      "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_", varsIgnorePattern: "^_", ignoreRestSiblings: true }],
     },
   },
   globalIgnores([".next/**", "out/**", "build/**", "next-env.d.ts", "src/lib/generated/**"]),

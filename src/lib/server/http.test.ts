@@ -44,7 +44,7 @@ describe("rejectCrossSite", () => {
 });
 
 describe("parseJsonBody", () => {
-  const schema = z.object({ title: z.string().min(1) });
+  const schema = z.object({ title: z.string({ error: "Title is required." }).min(1, "Title is required.") });
 
   it("returns parsed data and strips unknown keys", async () => {
     const res = await parseJsonBody(req(base, JSON.stringify({ title: "a", isAdmin: true })), schema);
@@ -61,8 +61,16 @@ describe("parseJsonBody", () => {
     expect(res.ok ? 0 : res.response.status).toBe(400);
   });
 
-  it("rejects schema failures with 400", async () => {
+  it("rejects schema failures with 400 and the field's message", async () => {
     const res = await parseJsonBody(req(base, JSON.stringify({ title: "" })), schema);
-    expect(res.ok ? 0 : res.response.status).toBe(400);
+    expect(res.ok).toBe(false);
+    if (res.ok) return;
+    expect(res.response.status).toBe(400);
+    expect(await res.response.json()).toEqual({ error: "Title is required." });
+  });
+
+  it("uses the field's message for a wrong type too", async () => {
+    const res = await parseJsonBody(req(base, JSON.stringify({ title: 5 })), schema);
+    expect(res.ok ? null : await res.response.json()).toEqual({ error: "Title is required." });
   });
 });
