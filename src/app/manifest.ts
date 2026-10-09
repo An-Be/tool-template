@@ -8,7 +8,8 @@ export default function manifest(): MetadataRoute.Manifest {
     name: site.name,
     short_name: site.name,
     description: site.description,
-    start_url: "/",
+    // No start_url: it then defaults to the page the person added to their Home
+    // Screen from, so secret-link pages (/t/<token>) open themselves.
     display: "standalone",
     background_color: site.themeColor,
     theme_color: site.themeColor,
