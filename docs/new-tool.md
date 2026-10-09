@@ -38,8 +38,9 @@ About 20 minutes from template to a deployed, secured app.
 
 1. Import the repo. Region is already `cle1` (`vercel.json`).
 2. Add `DATABASE_URL` and `DIRECT_URL` (app role) as **Sensitive** env vars for
-   Production. Add them to Preview too if previews should build (the drift
-   check requires `DIRECT_URL` on Vercel). A Neon branch per preview is the safe option.
+   Production. The drift check requires `DIRECT_URL` on production deploys only;
+   previews build without it. For previews that talk to a database, point them
+   at a Neon branch, never the production one.
 3. Deploy, then point the domain.
 
 ## 6. Before sharing the link
