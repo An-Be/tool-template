@@ -23,6 +23,8 @@ TabMath as the reference implementation:
 [accounts + guest sessions](./docs/modules/auth-clerk.md),
 [photo uploads](./docs/modules/uploads-uploadthing.md),
 [AI extraction](./docs/modules/ai-extraction.md).
+Product analytics with PostHog is built in and stays off until you add its env
+vars: [analytics](./docs/modules/analytics-posthog.md).
 
 ## Run it
 

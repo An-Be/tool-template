@@ -41,7 +41,10 @@ About 20 minutes from template to a deployed, secured app.
    Production. The drift check requires `DIRECT_URL` on production deploys only;
    previews build without it. For previews that talk to a database, point them
    at a Neon branch, never the production one.
-3. Deploy, then point the domain.
+3. Optional: create a PostHog project for the tool and add
+   `NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN` + `NEXT_PUBLIC_POSTHOG_HOST`
+   ([analytics](./modules/analytics-posthog.md)).
+4. Deploy, then point the domain.
 
 ## 6. Before sharing the link
 
@@ -50,4 +53,5 @@ About 20 minutes from template to a deployed, secured app.
 - [ ] Secret links use `newToken()`; secret routes are `no-store` + `noindex`
 - [ ] No `NEXT_PUBLIC_` secrets; DB code only in `src/lib/server/`
 - [ ] Browser console shows no CSP violations on every page
+- [ ] If PostHog is on: a pageview on a secret link shows `[secret]` in PostHog, not the token
 - [ ] PNG icons (192, 512, maskable) in `public/` and listed in `src/app/manifest.ts`
