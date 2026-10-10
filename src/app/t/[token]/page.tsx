@@ -17,13 +17,15 @@ export default async function SpacePage({ params }: PageProps<"/t/[token]">) {
   if (!space) notFound();
 
   return (
-    <Shell>
+    <>
       <SiteHeader />
-      <main className="flex flex-1 flex-col gap-10 py-10">
-        {/* Pass only what the view needs across the server/client boundary. */}
-        <SpaceView token={space.token} title={space.title} />
-      </main>
-      <SiteFooter />
-    </Shell>
+      <Shell>
+        <main className="flex flex-1 flex-col gap-10 py-10">
+          {/* Pass only what the view needs across the server/client boundary. */}
+          <SpaceView token={space.token} title={space.title} />
+        </main>
+        <SiteFooter />
+      </Shell>
+    </>
   );
 }

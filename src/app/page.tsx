@@ -7,19 +7,21 @@ import { site } from "@/config/site";
 
 export default function Home() {
   return (
-    <Shell>
+    <>
       <SiteHeader />
-      <main className="flex flex-1 flex-col gap-10 py-10">
-        <section className="flex flex-col gap-4">
-          <h1 className="display text-5xl">{site.name}</h1>
-          <p className="text-sm text-mute">{site.description}</p>
-        </section>
-        <section>
-          <SectionLabel n="01">Start</SectionLabel>
-          <CreateSpaceForm />
-        </section>
-      </main>
-      <SiteFooter />
-    </Shell>
+      <Shell>
+        <main className="flex flex-1 flex-col gap-10 py-10">
+          <section className="flex flex-col gap-4">
+            <h1 className="display text-5xl">{site.name}</h1>
+            <p className="text-sm text-mute">{site.description}</p>
+          </section>
+          <section>
+            <SectionLabel n="01">Start</SectionLabel>
+            <CreateSpaceForm />
+          </section>
+        </main>
+        <SiteFooter />
+      </Shell>
+    </>
   );
 }
